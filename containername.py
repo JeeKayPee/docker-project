@@ -1,9 +1,9 @@
-import subprocess
+import docker
 
 def get_container_name(container_id):
-    cmd = f"docker inspect --format='{{{{.Name}}}}' {container_id}"
-    result = subprocess.check_output(cmd, shell=True, text=True)
-    container_name = result.strip('/')
+    client = docker.from_env()
+    container = client.containers.get(container_id)
+    container_name = container.name
     return container_name
 
 # Specify the container ID
